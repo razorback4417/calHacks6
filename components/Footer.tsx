@@ -12,7 +12,7 @@ const Footer = () => {
   const asPath = usePathname();
   const { data: session } = useSession();
   return (
-    <footer className="fixed bottom-0 right-0 w-screen h-[11vh] bg-white flex justify-around items-center md:h-screen md:w-[4rem] md:flex md:flex-col-reverse md:justify-around md:items-center md:left-0 md:top-0 z-1">
+    <footer className="fixed bottom-0 right-0 w-screen h-[11vh] bg-white flex justify-around items-center">
       <Link href="/">
         {asPath === "/" ? (
           <RiHomeSmile2Fill size={28} color="rgb(50, 50, 50)" />
