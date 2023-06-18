@@ -8,13 +8,13 @@ const OptionComment = ({commentId} : {commentId : string}) => {
     const [isLoading, setIsLoading] = useState(false)
     const [isDeleted, setIsDeleted] = useState("")
     const router = useRouter()
-    
-    
+
+
     const handleDelete = async (id : string) => {
         setIsLoading(true)
-        const res = await fetch(`https://p3social.vercel.app/api/comment?commentId=${id}`, {
+        const res = await fetch(`https://cal-hacks6.vercel.app/api/comment?commentId=${id}`, {
             method : "DELETE"
-        })    
+        })
         const data = await res.json()
 
         if(res.ok) {

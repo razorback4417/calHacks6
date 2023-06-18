@@ -51,20 +51,20 @@ const Post = () => {
                 const data: Awaited<{ secure_url: string }> = await res.json()
                 if (res.ok) {
                     try {
-                        const result = await fetch("https://p3social.vercel.app/api/desc", {
+                        const result = await fetch("https://cal-hacks6.vercel.app/api/desc", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json"
                             },
                             body: JSON.stringify({ desc, image: data.secure_url, profile: session?.user?.image!, username: session?.user?.name!, userId: session?.user?.id })
                         })
-                        
+
                         const resp = await result.json()
-    
+
                         if (result.ok) {
                             setLoading(false)
                             setSuccess("Post Uploaded")
-        
+
                             setTimeout(() => {
                                 setSuccess("")
                                 router.push('/')
