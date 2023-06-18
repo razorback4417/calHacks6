@@ -1,43 +1,12 @@
-import { AuthOptions } from "next-auth";
-import NextAuth from "next-auth/next";
-import GoogleProvider from 'next-auth/providers/google'
-import {connectToDatabase} from "../../../lib/mongodb";
-import { LoginType } from "../../../type";
-
-export const authOption : AuthOptions = {
-    providers : [
+import NextAuth from 'next-auth';
+import GoogleProvider from 'next-auth/providers/google';
+export default NextAuth({
+    providers: [
         GoogleProvider({
-            clientId : process.env.PROVIDER_CLIENT_ID!,
-            clientSecret : process.env.PROVIDER_CLIENT_SECRET!
+            clientId: '200118243383-7kfgcb965fnqi19mf0ft9dr11dbqa043.apps.googleusercontent.com',
+            clientSecret: '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',
         }),
     ],
-    pages : {
-        signIn : "/"
-    },
-    session : {
-        strategy : "jwt",
-    },
-    callbacks : {
-        async signIn({account, user, profile}) {
-            const { db } = await connectToDatabase()
-
-            const Login = db.collection<LoginType>('Login')
-            
-            const find = await Login.findOne({userId : profile?.sub}, {projection : { _id : 0 }})
-
-            if(find) return true
-
-            if(!find) 
-            await Login.insertOne({ userId : profile?.sub!, followed : [], profile : user?.image!, username : profile?.name! })
-
-            return true
-        },
-        async session({session, user, token}) {
-            session.user.id = token.sub
-            return session
-        }
-    },
-    secret : process.env.NEXTAUTH_SECRET!
-}   
-
-export default NextAuth(authOption)
+    // Optional configuration options
+    // ...
+});
