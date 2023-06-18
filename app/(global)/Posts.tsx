@@ -3,7 +3,7 @@ import PostLayout from "../../components/PostLayout";
 import { PostType } from "../../type";
 
 const getPost = async () => {
-  const res = await fetch("https://p3social.vercel.app/api/post", {
+  const res = await fetch("https://cal-hacks6.vercel.app/api/post", {
     cache: "no-store",
   });
 

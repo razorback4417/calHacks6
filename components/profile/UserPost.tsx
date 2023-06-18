@@ -6,11 +6,11 @@ import { PostType, profileSession } from "../../type"
 
 const fetcher : Fetcher<{ data? : PostType[], msg? : string }> = async (url : string) => {
     const res = await fetch(url)
-    return res.json() 
+    return res.json()
 }
 
 const UserPost = ({session, userId} : { session? : profileSession, userId? : string }) => {
-    const {data : posts, isLoading} = useSWR(`https://p3social.vercel.app/api/posts?userId=${session?.user?.id! ? session?.user?.id :  userId}`, fetcher)
+    const {data : posts, isLoading} = useSWR(`https://cal-hacks6.vercel.app/api/posts?userId=${session?.user?.id! ? session?.user?.id :  userId}`, fetcher)
     const LoadArr = [1, 2, 3, 4]
 
   if(isLoading) return (
@@ -35,8 +35,8 @@ const UserPost = ({session, userId} : { session? : profileSession, userId? : str
         <section key={i} className="w-[200px] h-[13rem] shadow-sm transition-[200ms] cursor-pointer hover:scale-105">
             <Image src={`${post.image}`} width={200} height={140} alt="post" className="w-full h-full object-cover rounded-xl"/>
         </section>
-     ))}   
-     
+     ))}
+
     </nav>
   )
 }
