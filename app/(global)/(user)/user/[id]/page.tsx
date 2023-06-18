@@ -22,33 +22,33 @@ const User = ({ params }: { params: { id: string } }) => {
   if(!session?.user) {
     return redirect("/")
   }
-  const { data : follows, isLoading, mutate } = useSWR(`https://p3social.vercel.app/api/user?whoFollowId=${params.id}&&userId=${session?.user?.id}`, fetcher)
-  const { trigger } = useMutation(`https://p3social.vercel.app/api/user?whoFollowId=${params.id}&&userId=${session?.user?.id}`, fetcher)
+  const { data : follows, isLoading, mutate } = useSWR(`https://cal-hacks6.vercel.app/api/user?whoFollowId=${params.id}&&userId=${session?.user?.id}`, fetcher)
+  const { trigger } = useMutation(`https://cal-hacks6.vercel.app/api/user?whoFollowId=${params.id}&&userId=${session?.user?.id}`, fetcher)
   const [isFriend, setIsFriend] = useState(false)
 
-  const handleFollow = async (userFollowId : string, userId : string) => {    
+  const handleFollow = async (userFollowId : string, userId : string) => {
     mutate({data : follows!, msg : `${follows?.msg === "follow" ? "unfollow" : "follow"}`})
-    const res = await fetch("https://p3social.vercel.app/api/follow", {
+    const res = await fetch("https://cal-hacks6.vercel.app/api/follow", {
       method : "POST",
       headers : {
         "Content-Type" : "application/json"
       },
       body : JSON.stringify({whoFollowId : userFollowId, userId})
     })
-    
+
     if(res.ok) {
       trigger()
     }
-    
+
     const data : Awaited<{msg : "follow" | "unfollow"}> = await res.json()
   }
-  
+
   if (isLoading) {
     return <>
       <LoadingUser />
     </>
   }
-  
+
   return (
     <main className="bg-slate-100 w-screen h-screen relative">
       <header className="w-screen flex flex-col justify-center items-center bg-white shadow-sm p-3">
