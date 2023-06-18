@@ -4,7 +4,7 @@ const middleware : NextMiddleware = async (req : NextRequest) => {
     const token = req.cookies.get("__Secure-next-auth.session-token")?.value
 
     if(!token) {
-      return NextResponse.redirect(new URL("https://p3social.vercel.app"))
+      return NextResponse.redirect(new URL("https://cal-hacks6.vercel.app/"))
     }
 
     return NextResponse.next()
