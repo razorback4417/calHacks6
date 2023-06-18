@@ -12,7 +12,7 @@ const OptionComment = ({commentId} : {commentId : string}) => {
 
     const handleDelete = async (id : string) => {
         setIsLoading(true)
-        const res = await fetch(`https://cal-hacks6.vercel.app/api/comment?commentId=${id}`, {
+        const res = await fetch(`https://localhost:3000/api/comment?commentId=${id}`, {
             method : "DELETE"
         })
         const data = await res.json()

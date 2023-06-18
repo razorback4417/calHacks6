@@ -18,7 +18,7 @@ const isLike = (likes: Array<LikesType>, username: string): boolean => {
 };
 
 const fetcher = (url: string) => {
-  return fetch(`https://cal-hacks6.vercel.app/api/post`).then((res) => res.json());
+  return fetch(`https://localhost:3000/api/post`).then((res) => res.json());
 };
 
 interface CardProps extends PostType {
@@ -38,7 +38,7 @@ const Card: React.FC<CardProps> = ({
   const { data: session } = useSession();
   const router = useRouter();
   const { mutate } = useSWRConfig();
-  const { trigger } = useMutation("https://cal-hacks6.vercel.app/api/post", fetcher);
+  const { trigger } = useMutation("https://localhost:3000/api/post", fetcher);
 
   const handleLike = async (postId: string) => {
     const mappedData = initialData.map((data) => {
@@ -51,9 +51,9 @@ const Card: React.FC<CardProps> = ({
         return data;
       }
     });
-    mutate("https://cal-hacks6.vercel.app/api/post", mappedData, { revalidate: false });
+    mutate("https://localhost:3000/api/post", mappedData, { revalidate: false });
 
-    const res = await fetch(`https://cal-hacks6.vercel.app/api/desc?postId=${postId}`, {
+    const res = await fetch(`https://localhost:3000/api/desc?postId=${postId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -87,9 +87,9 @@ const Card: React.FC<CardProps> = ({
       }
     });
 
-    mutate("https://cal-hacks6.vercel.app/api/post", mappedData, { revalidate: false });
+    mutate("https://localhost:3000/api/post", mappedData, { revalidate: false });
 
-    const res = await fetch(`https://cal-hacks6.vercel.app/api/desc?postId=${postId}`, {
+    const res = await fetch(`https://localhost:3000/api/desc?postId=${postId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

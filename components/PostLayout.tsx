@@ -4,7 +4,7 @@ import { PostType } from "../type"
 
 const PostLayout : React.FC<{children : React.ReactNode, post : Array<PostType>}> = ({children, post}) => {
   return (
-    <SWRConfig value={{fallback : {"https://cal-hacks6.vercel.app/api/post" : post}}}>
+    <SWRConfig value={{fallback : {"https://localhost:3000/api/post" : post}}}>
       {children}
     </SWRConfig>
   )
