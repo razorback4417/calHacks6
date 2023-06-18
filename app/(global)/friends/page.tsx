@@ -21,34 +21,34 @@ const PageFriend = () => {
   if(!session?.user) {
     return redirect("/")
   }
-  const url = `https://p3social.vercel.app/api/friend?userId=${session?.user?.id}`
+  const url = `https://cal-hacks6.vercel.app/api/friend?userId=${session?.user?.id}`
   const { data: friends, isLoading, mutate }  = useSWR(
     url
     ,
     getFriends
     );
-    
+
   const { trigger } = useSWRMutation(url, getFriends)
   const [search, setSearch] = useState("")
   const [initData, setinitData] = useState<[] | FollowType>([])
 
-    const handleFollow = async (userFollowId : string, userId : string) => {   
-        const filtering = friends?.followed.filter((follow : FollowType) => follow.userId !== userId) 
+    const handleFollow = async (userFollowId : string, userId : string) => {
+        const filtering = friends?.followed.filter((follow : FollowType) => follow.userId !== userId)
 
         mutate({followed : filtering!}, {revalidate : false})
 
-        const res = await fetch(`https://p3social.vercel.app/api/follow`, {
+        const res = await fetch(`https://cal-hacks6.vercel.app/api/follow`, {
           method : "POST",
           headers : {
             "Content-Type" : "application/json"
           },
           body : JSON.stringify({whoFollowId : userFollowId, userId})
         })
-        
+
         if(res.ok) {
           trigger()
         }
-        
+
         const data : Awaited<{msg : "follow" | "unfollow"}> = await res.json()
       }
 
@@ -57,7 +57,7 @@ const PageFriend = () => {
         if(!value) {
           return mutate({followed : initData}, {revalidate : false})
         }
-        
+
         const filtering = friends?.followed.filter((friend : FollowType) => (
           friend.whoFollow.toLowerCase().includes(value.toLowerCase())
         ))
@@ -93,7 +93,7 @@ const PageFriend = () => {
         </span>
       </header>
       <section className="mt-3 md:pl-4">
-        
+
       {friends?.followed?.length ? <>
         {friends?.followed?.map((follow : FollowType, i : number) => (
                 <section key={i} className="md:w-[85vw] w-full p-3 bg-white shadow-sm rounded-xl">
@@ -103,7 +103,7 @@ const PageFriend = () => {
                         <p className="text-sm text-stone-700">{follow.whoFollow}</p>
                           </Link>
                         <div>
-                             <button 
+                             <button
                              onClick={() => handleFollow(follow.whoFollowId, follow.userId)} className="px-4 p-2 bg-white border-[1px] border-blue-500  rounded-full transition-[200ms] shadow-sm text-sm text-blue-500 hover:bg-stone-100">unfriend</button>
                         </div>
                     </header>

@@ -7,31 +7,31 @@ import ListLoading from "./ListLoading";
 
 const getFriends : Fetcher<{followed : FollowType[]}> = async (url : string) => {
     const res = await fetch(url);
-    return res.json() 
+    return res.json()
   }
 
 const ListFriend = ({session, params} : {session? : Session, params? : {id : string}}) => {
-    const url = `https://p3social.vercel.app/api/friend?userId=${session?.user?.id ? session?.user?.id : params?.id}`
+    const url = `https://localhost:3000/api/friend?userId=${session?.user?.id ? session?.user?.id : params?.id}`
     const { data : follows, isLoading, mutate } = useSWR(url, getFriends)
     const { trigger } = useSWRMutation(url, getFriends)
 
-    const handleFollow = async (userFollowId : string, userId : string) => {   
-        const filtering = follows?.followed.filter((follow) => follow.userId !== userId) 
+    const handleFollow = async (userFollowId : string, userId : string) => {
+        const filtering = follows?.followed.filter((follow) => follow.userId !== userId)
 
         mutate({followed : filtering!}, {revalidate : false})
 
-        const res = await fetch(`https://p3social.vercel.app/api/follow`, {
+        const res = await fetch(`https://cal-hacks6.vercel.app/api/follow`, {
           method : "POST",
           headers : {
             "Content-Type" : "application/json"
           },
           body : JSON.stringify({whoFollowId : userFollowId, userId})
         })
-        
+
         if(res.ok) {
           trigger()
         }
-        
+
         const data : Awaited<{msg : "follow" | "unfollow"}> = await res.json()
       }
 
@@ -52,7 +52,7 @@ const ListFriend = ({session, params} : {session? : Session, params? : {id : str
                         <p className="text-sm text-stone-700">{follow.whoFollow}</p>
                         </article>
                         <div>
-                             <button 
+                             <button
                              onClick={() => handleFollow(follow.whoFollowId, follow.userId)} className="px-4 p-2 bg-white border-[1px] border-blue-500  rounded-full transition-[200ms] shadow-sm text-sm text-blue-500 hover:bg-stone-100">unfriend</button>
                         </div>
                     </header>

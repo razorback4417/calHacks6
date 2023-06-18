@@ -3,6 +3,7 @@ import { connectToDatabase } from "../../../lib/mongodb"
 import { PostType } from "../../../type"
 
 const handler : NextApiHandler = async (req, res) => {
+    console.log('jdoisjf')
     if(req.method === "GET") {
         const { userId } = req.query as {userId : string}
         try {
